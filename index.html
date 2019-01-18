@@ -14,11 +14,11 @@
             Enter 5 hands into the boxes below.
         </label>
         <form action="#" id="hands" method="GET">
-            <input type="text">
-            <input type="text">
-            <input type="text">
-            <input type="text">
-            <input type="text">
+            <input type="text" name="card-one">
+            <input type="text" name="card-two">
+            <input type="text" name="card-three">
+            <input type="text" name="card-four">
+            <input type="text" name="card-five">
             <button type="submit">
                 Evaluate Hand
             </button>
@@ -34,9 +34,10 @@
     <script>
         $('#hands').on('submit', function(e) {
             e.preventDefault();
-            $.get('/test.php', function(data, status) {
-                console.log(status);
+            $.post('/test.php', $('#hands').serialize(), function(data){
                 console.log(data);
+            }).fail(function() {
+                $('.errors').text('Server error, please try again');
             });
         });
     </script>
