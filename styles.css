@@ -1,0 +1,35 @@
+.form-container {
+    margin-top: 50px;
+}
+
+.form-container form{
+    margin-top: 30px;
+}
+
+.form-container form input{
+    width: 30px;
+    height: 30px;
+    border: 2px solid grey;
+    font-size: 15px;
+    text-align: center;
+}
+
+.form-container form button{
+    height: 30px;
+    margin-left: 20px;
+}
+
+.errors-container {
+    height: 20px;
+    margin-top: 5px;
+}
+
+.results-container {
+    height: 30px;
+    margin-top: 5px;
+}
+
+.errors-container p, .results-container p {
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+}
