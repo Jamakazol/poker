@@ -11,7 +11,7 @@
 <body>
     <div class="form-container">
         <label for="hands">
-            Enter 5 hands into the boxes below.
+            Enter 5 hands into the boxes below. For example King of spades is 'Ks', joker is 'J'
         </label>
         <form action="#" id="hands" method="GET">
             <input type="text" name="card-one">
@@ -34,8 +34,8 @@
     <script>
         $('#hands').on('submit', function(e) {
             e.preventDefault();
-            $.post('/test.php', $('#hands').serialize(), function(data){
-                console.log(data);
+            $.post('/handTest.php', $('#hands').serialize(), function(data){
+                $('.errors').text(data);
             }).fail(function() {
                 $('.errors').text('Server error, please try again');
             });
