@@ -4,11 +4,6 @@ namespace PokerApp;
 
 class Hand extends HandValidator {
     public $cards;
-    public $card_one;
-    public $card_two;
-    public $card_three;
-    public $card_four;
-    public $card_five;
 
     public function __construct($one, $two, $three, $four, $five)
     {
@@ -19,11 +14,11 @@ class Hand extends HandValidator {
         $this->card_five = strtolower($five);
 
         $this->cards = [
-            $this->card_one,
-            $this->card_two,
-            $this->card_three,
-            $this->card_four,
-            $this->card_five
+            strtolower($one),
+            strtolower($two),
+            strtolower($three),
+            strtolower($four),
+            strtolower($five)
         ];
     }
 
@@ -31,6 +26,12 @@ class Hand extends HandValidator {
     {
         $errors = $this->isValidHand($this->cards);
         return $errors;
+    }
+
+    public function getScore()
+    {
+        $score = $this->evaluateScore($this->cards);
+        return $score;
     }
 }
 

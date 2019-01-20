@@ -10,8 +10,17 @@
 </head>
 <body>
     <div class="form-container">
+        <p>
+            King of spades is 'Ks'.
+        </p>
+        <p>
+            Joker is 'J'.
+        </p>
+        <p>
+            Rules: 53 cards in the deck. 52 standard cards and 1 wildcard(joker) in the deck.
+        </p>
         <label for="hands">
-            Enter 5 hands into the boxes below. For example King of spades is 'Ks', joker is 'J'
+            Enter 5 cards into the boxes below.
         </label>
         <form action="#" id="hands" method="GET">
             <input type="text" name="card-one">
@@ -24,9 +33,6 @@
             </button>
         </form>
     </div>
-    <div class="errors-container">
-        <p class="errors"></p>
-    </div>
     <div class="results-container">
         <p class="results"></p>
     </div>
@@ -34,10 +40,10 @@
     <script>
         $('#hands').on('submit', function(e) {
             e.preventDefault();
-            $.post('/handTest.php', $('#hands').serialize(), function(data){
-                $('.errors').text(data);
+            $.post('/poker.php', $('#hands').serialize(), function(data){
+                $('.results').text(data);
             }).fail(function() {
-                $('.errors').text('Server error, please try again');
+                $('.results').text('Server error, please try again');
             });
         });
     </script>
