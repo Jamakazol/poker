@@ -1,6 +1,6 @@
 <?php
 
-require('HandScore.php');
+namespace PokerApp;
 
 class HandValidator extends HandScore
 {
@@ -66,9 +66,9 @@ class HandValidator extends HandScore
             if (preg_match('/^(((([2-9]|10)|(j|q|k|a))(s|c|h|d))|j)$/i', $card) != true) {
                 $cardsValid = false;
             }
-
-            return $cardsValid;
         }
+
+        return $cardsValid;
     }
 }
 

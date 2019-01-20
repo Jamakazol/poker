@@ -1,6 +1,8 @@
 <?php
 
-require('Hand.php');
+require "vendor/autoload.php";
+
+use PokerApp\Hand;
 
 $hand = new Hand($_POST['card-one'], $_POST['card-two'], $_POST['card-three'], $_POST['card-four'], $_POST['card-five']);
 

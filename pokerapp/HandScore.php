@@ -1,5 +1,7 @@
 <?php
 
+namespace PokerApp;
+
 class HandScore
 {
     public function getScore()

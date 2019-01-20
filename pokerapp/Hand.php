@@ -1,6 +1,6 @@
 <?php
 
-require('HandValidator.php');
+namespace PokerApp;
 
 class Hand extends HandValidator {
     public $cards;
