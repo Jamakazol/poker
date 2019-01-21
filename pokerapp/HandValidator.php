@@ -15,11 +15,7 @@ class HandValidator extends HandScore
         $errors = [];
 
         if ($this->checkCardsUnique($hand) == false) {
-            array_push($errors, 'missing or duplicate cards');
-        }
-
-        if ($this->checkIsFiveCards($hand) == false) {
-            array_push($errors, 'hand must contain exactly 5 cards');
+            array_push($errors, 'duplicate cards');
         }
         
         if ($this->checkCardsExist($hand) == false) {
@@ -36,19 +32,6 @@ class HandValidator extends HandScore
     private function checkCardsUnique($hand)
     {
         if (array_unique($hand) !== $hand) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Checks that hand contains exactly 5 cards
-     * @return bool
-     */
-    private function checkIsFiveCards($hand)
-    {
-        if ((count($hand) !== 5) || in_array('', $hand)) {
             return false;
         } else {
             return true;

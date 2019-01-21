@@ -15,9 +15,9 @@ if (trim($_POST['card-one']) == '' ||
     die;
 }
 
-$hand = new Hand($_POST['card-one'], $_POST['card-two'], $_POST['card-three'], $_POST['card-four'], $_POST['card-five']);
+$cards = new Hand($_POST['card-one'], $_POST['card-two'], $_POST['card-three'], $_POST['card-four'], $_POST['card-five']);
 
-$errors = $hand->getErrors();
+$errors = $cards->getErrors();
 
 if (count($errors) > 0) {
     $count = 0;
@@ -30,7 +30,7 @@ if (count($errors) > 0) {
         $count++;
     };
 } else {
-    $score = $hand->evaluateScore($hand->cards);
+    $score = $cards->evaluateScore($cards->hand, $cards->handInfo);
     echo 'Score:' . $score;
 }
 

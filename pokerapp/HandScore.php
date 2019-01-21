@@ -4,11 +4,7 @@ namespace PokerApp;
 
 class HandScore
 {
-    public $handInfo = [
-        'values' => [],
-        'suits' => []
-    ];
-
+    public $handInfo;
     public $hand;
 
     /**
@@ -17,10 +13,10 @@ class HandScore
      * @param array $hand
      * @return array
      */
-    public function evaluateScore($hand)
+    public function evaluateScore($hand, $handInfo)
     {
-        $this->hand = $this->setNumbersAndJokers($hand);
-        $this->setHandInfo();
+        $this->hand = $hand;
+        $this->handInfo = $handInfo;
 
         if ($this->isFiveOfAKind()) {
             return '5 of a kind';
@@ -43,80 +39,6 @@ class HandScore
         } else {
             return 'High card';
         }
-    }
-
-    /**
-     * Sets face cards (a,j,q,k) to number values (1,11,12,13) and puts joker on end of hand array if one exists.
-     * 
-     * @param array $hand
-     * @return array $hand
-     */
-    public function setNumbersAndJokers($hand)
-    {
-        $index = 0;
-        foreach ($hand as $card) {
-            if ($card == 'j') {
-                $joker = true;
-                unset($hand[$index]);
-            } else {
-                switch ($card[0]) {
-                    case 'j':
-                        $hand[$index] = '11' . substr($card, -1);
-                        break;
-                    case 'q':
-                        $hand[$index] = '12' . substr($card, -1);
-                        break;
-                    case 'k':
-                        $hand[$index] = '13' . substr($card, -1);
-                        break;
-                    case 'a':
-                        $hand[$index] = '1' . substr($card, -1);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            $index++;
-        }
-
-        if ($joker == true) {
-            array_push($hand, 'j');
-        }
-
-        return $hand;
-    }
-
-    /**
-     * Sets handInfo array values
-     * 
-     * @param array $hand
-     * @return void
-     */
-    public function setHandInfo()
-    {
-        $hand = $this->hand;
-
-        foreach ($hand as $card) {
-            if ($card != 'j') {
-
-                $cardValue = substr($card, 0, -1);
-                $suit = substr($card, -1);
-
-                if (array_key_exists($cardValue, $this->handInfo['values'])) {
-                    $this->handInfo['values'][$cardValue] = $this->handInfo['values'][$cardValue] + 1;
-                } else {
-                    $this->handInfo['values'][$cardValue] = 1;
-                }
-
-                if (array_key_exists($suit, $this->handInfo['suits'])) {
-                    $this->handInfo['suits'][$suit] = $this->handInfo['suits'][$suit] + 1;
-                } else {
-                    $this->handInfo['suits'][$suit] = 1;
-                }
-            }
-        }
-
-        return null;
     }
     
     /**
@@ -155,11 +77,28 @@ class HandScore
     public function isFourOfAKind()
     {
         $handInfo = $this->handInfo;
-
-        if (count($handInfo['values']) == 2) {
-            return true;
+        $three = false;
+        $four = false;
+        foreach ($handInfo['values'] as $card => $count) {
+            if ($count == 3) {
+                $three = true;
+            }
+            if ($count == 4) {
+                $four = true;
+            }
+        }
+        if ($this->joker() == true) {
+            if ($three == true) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            if ($four == true) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -218,7 +157,7 @@ class HandScore
         if (array_key_exists(12, $handInfo['values']) || array_key_exists(13, $handInfo['values'])) {
             $ace = 14;
         }
-        
+
         if ($this->joker() == true) {
             sort($hand);
             array_pop($hand);
@@ -243,12 +182,19 @@ class HandScore
 
         $straight = true;
 
+        $oneFarCardAllowed = true;
         for ($x = 0; $x < count($hand) - 1; $x++) {
             $card = $hand[$x];
             $nextCard = $hand[$x + 1];
             if ($card + 1 != $nextCard) {
-                if ($joker == true) {
-                    if ($card + 2 != $nextCard) {
+                if ($oneFarCardAllowed == true) {
+                    if ($joker == true) {
+                        if ($card + 2 == $nextCard) {
+                            $oneFarCardAllowed = false;
+                        } else {
+                            $straight = false;
+                        }
+                    } else {
                         $straight = false;
                     }
                 } else {
